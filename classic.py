@@ -1,35 +1,48 @@
 import pygame
+class Food():
+    def __init__(self, a, c, d):
+        self.image = pygame.image.load(a)# загружаем картинку
+        self.rect = self.image.get_rect()# получение прямоугольника от картинки
+        self.x = c #свойство объекта, координата x
+        self.y = d
 
-pygame.init() #запомнить
-x = 100
-y = 100
-weight = 100
-height = 70
-window_size=(300, 300)#размеры окна
-screen=pygame.display.set_mode(window_size)#создаем экран с размерами
-pygame.display.set_caption("Моя игра")#название игры
-background_color = (16, 205, 200)#cоздаем цвет фона
+    def move_plate(self): #
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LEFT] == True:
+             self.x -= 5
+        if keys[pygame.K_RIGHT]:
+            self.x += 5
+
+
+    def draw_image(self):  #метод отрисовки картинки
+        screen.blit(self.image, (self.x, self.y))
+
+
+fon = Food('kitchen.jpg', 0, 0 ) #создание объекта класса food
+f1 = Food('pelmen.png', 0, 0 )
+f2 = Food('pelmen.png', 110, 0 )
+f3 = Food('pelmen.png', 220, 0 )
+f4 = Food('pelmen.png', 330, 0 )
+f5 = Food('pelmen.png', 440, 0 )
+plate = Food('plate.png', 380, 600)
+
+pygame.init() #обязательная программа
+window_size=(1000 , 700) #размеры окна
+screen=pygame.display.set_mode(window_size) #создаем экран с размерами
+pygame.display.set_caption("Doom eternal") #название игры
 clock = pygame.time.Clock()
-font = pygame.font.SysFont('Arial', 10)
-text = font.render('somebody cover my!!!', True, 371)
 
 while True:
-    screen.fill(background_color)
-    r = pygame.Rect(x, y, weight, height)
-    pygame.draw.rect(screen, 123456789, r)
-    screen.blit(text, (110, 125))
-    clock.tick(10)# считаем фпс
-    pygame.display.update() # обнова экрана
+    fon.draw_image()#применение метода отрисовки картинки
+    plate.move_plate()
+    f1.draw_image()
+    f2.draw_image()
+    f3.draw_image()
+    f4.draw_image()
+    f5.draw_image()
+    plate.draw_image()
+    clock.tick(123)# считаем фпс
     for event in pygame.event.get(): # ходим по событиям
-        if event.type == pygame.KEYDOWN: # если клавиша нажата
-            if event.key == pygame.K_a: # если клавиша а
-                x = x-5
-            if event.key == pygame.K_w: # если клавиша а
-                y = y-5
-            if event.key == pygame.K_s:  # если клавиша а
-                y = y + 5
-            if event.key == pygame.K_d:  # если клавиша а
-                x = x + 5
         if event.type == pygame.QUIT: # нажали на крестик
             pygame.QUIT() # вышли из игры
-
+    pygame.display.update() # обнова экрана
